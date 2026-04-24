@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HAKO — すべての猫が入る箱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --paper: oklch(0.97 0.01 85);
+    --ink: oklch(0.22 0.02 60);
+    --ink-soft: oklch(0.42 0.015 60);
+    --rule: oklch(0.86 0.015 75);
+    --ginger: oklch(0.72 0.14 55);
+    --sans-jp: "Noto Sans JP", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans-jp);
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(1100px 600px at 80% -10%, oklch(0.93 0.025 75 / .6), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, oklch(0.93 0.025 70 / .5), transparent 60%);
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none;
+    opacity: .035; mix-blend-mode: multiply; z-index: 1000;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .page {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    padding: 32px 48px;
+  }
+  @media (max-width: 720px) { .page { padding: 24px; } }
+
+  header {
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+
+  .brand {
+    font-family: var(--sans-jp);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+  }
+  .brand span {
+    font-weight: 300;
+    color: var(--ink-soft);
+    margin-left: 8px;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  .meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+
+  main {
+    flex: 1;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    padding: 48px 0;
+    gap: 40px;
+  }
+
+  .tagline {
+    font-family: var(--sans-jp);
+    font-weight: 500;
+    font-size: clamp(24px, 3.6vw, 42px);
+    line-height: 1.45;
+    letter-spacing: 0.04em;
+    margin: 0;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    line-break: strict;
+  }
+  .tagline .phrase {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .tagline em {
+    font-style: normal;
+    color: var(--ginger);
+  }
+
+  .hero-figure {
+    position: relative;
+    width: min(560px, 90vw);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: oklch(0.94 0.015 82);
+    box-shadow:
+      0 1px 0 var(--rule),
+      0 30px 60px -30px oklch(0.3 0.05 60 / .25);
+    margin: 0;
+  }
+  .hero-figure img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.95) contrast(1.02);
+    display: block;
+  }
+
+  .price-line {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: -20px;
+    letter-spacing: 0.04em;
+  }
+  .price-line b {
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 17px;
+    margin-right: 6px;
+  }
+
+  .cta {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 18px 40px;
+    border-radius: 999px;
+    font-family: var(--sans-jp);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    transition: background .25s ease, transform .25s ease, letter-spacing .25s ease;
+  }
+  .cta:hover {
+    background: var(--ginger);
+    transform: translateY(-1px);
+    letter-spacing: 0.18em;
+  }
+  .cta .arrow { display: inline-block; transition: transform .25s ease; }
+  .cta:hover .arrow { transform: translateX(4px); }
+
+  footer {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 560px) {
+    footer { flex-direction: column; gap: 6px; text-align: center; }
+    header { flex-direction: column; gap: 4px; align-items: flex-start; }
+  }
+
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: var(--paper);
+    padding: 12px 22px; border-radius: 999px;
+    font-family: var(--sans-jp); font-size: 12px; letter-spacing: 0.08em;
+    z-index: 2000;
+    animation: toastIn .3s ease;
+  }
+  @keyframes toastIn {
+    from { transform: translate(-50%, 20px); opacity: 0; }
+    to   { transform: translate(-50%, 0);    opacity: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand">HAKO<span>— 箱</span></div>
+    <div class="meta">京都 · 2026</div>
+  </header>
+
+  <main>
+    <h1 class="tagline"><span class="phrase">すべての猫が、</span><span class="phrase"><em>入る箱。</em></span></h1>
+
+    <figure class="hero-figure">
+      <img src="assets/cat-hero.jpg" alt="箱に入った猫" />
+    </figure>
+
+    <div class="price-line"><b>¥2,400</b>（送料込み・全国）</div>
+
+    <button class="cta" id="buy-btn">
+      今すぐ買う <span class="arrow">→</span>
+    </button>
+  </main>
+
+  <footer>
+    <span>© 2026 HAKO</span>
+    <span>すべての猫に、ひとつの箱を。</span>
+  </footer>
+</div>
+
+<script>
+  document.getElementById('buy-btn').addEventListener('click', () => {
+    const existing = document.querySelector('.toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = 'ご注文ありがとうございます';
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.remove(), 1800);
+  });
+</script>
+</body>
+</html>
